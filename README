@@ -1,0 +1,20 @@
+Logical Chaos v0.1
+
+Tested using Ruby 1.9.3-p484 --> require 'mkmf' problems with newer versions when using selenium web driver
+1. Install firefox
+2. Install ruby 1.9.3 and 2.0
+	2.1 Using rvm (recommended): 
+		\curl -sSL https://get.rvm.io | bash
+		/bin/bash --login
+		rvm install 1.9.3
+		rvm use 1.9.3 --default
+		Note: if you are using Backtrack or Kali you will have to map the full path /usr/local/rvm/bin/rvm
+	2.2 Using apt (not recommended):
+ 		sudo apt-get install ruby1.9.3-dev
+3. Install selenium-webriver 2.4.1 gem:
+	gem install selenium-webdriver -v 2.4.1 
+4. Install tesseract for captcha support http://code.google.com/p/tesseract-ocr/wiki/Compiling (THIS PART IS STILL IN DEVELOPMENT)
+
+> ruby logical_chaos.rb
+> ruby logical_chaos.rb -b
+> ruby logical_chaos.rb -e
