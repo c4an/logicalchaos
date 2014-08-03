@@ -2,7 +2,7 @@ Logical Chaos v0.1
 
 Tested using Ruby >= 1.9.3-p484 
 1. Install firefox
-2. Install ruby 1.9.3 and 2.0
+2. Install ruby 1.9.3 or 2.0
 	2.1 Using rvm (recommended): 
 		\curl -sSL https://get.rvm.io | bash
 		/bin/bash --login
