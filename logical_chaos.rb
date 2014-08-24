@@ -31,6 +31,7 @@ $LOAD_PATH << File.dirname(__FILE__)
 require 'enum/autoenum'
 require 'enum/websphere'
 require 'enum/qpm'
+require 'enum/pwreset_ff'
 #require 'enum/sap'
 
 ### require brute modules ########
@@ -75,6 +76,7 @@ class Logical_Chaos
 		puts "	|------ enumeration"
 		puts "			|----- qpm		# Retrieve valid user accounts through Quest Password Manager			#"
 		#puts "			|----- websphere	# Retrieve valid user accounts through Websphere				#"
+		puts "			|----- pwreset_ff	# Identify valid users  using ForeFront Password Reset application #"
 		puts "			|----- autoenum		# Identify user form automatically and enumerate user accounts		        #"
 		puts "	|------ bruteforce"
 		puts "			|----- citrix		# Find valid user accounts through dictionaty attack on Citrix			#"
@@ -334,7 +336,7 @@ class Logical_Chaos
 		puts " ruby logical_chaos.rb -e websphere -h https://X.X.X.X:8080/ -p /wps/portal/ -f /tmp/users -u /tmp/valid_users -s 127.0.0.1:9050"
 		puts " ruby logical_chaos.rb -e sap -h https://X.X.X.X:7000/ -p /sap/bc/gui/sap/its/webgui -f /tmp/users -u /tmp/valid_users -s 127.0.0.1:9050"
 		puts " ruby logical_chaos.rb -e peoplesoft -h https://X.X.X.X:7000/ -p /irj/portal/ -f /tmp/users -u /tmp/valid_users -s 127.0.0.1:9050"
-		puts " ruby logical_chaos.rb -e rsa -h https://X.X.X.X::9090/ -p /rsa/ -f /tmp/users -u /tmp/valid_users -s 127.0.0.1:9050\n\n\n"
+		puts " ruby logical_chaos.rb -e pwreset_ff -h https://X.X.X.X/ -p /desfault.aspx -f /tmp/users -u /tmp/valid_users -s 127.0.0.1:9050\n\n\n"
 		
 	end
 		
@@ -347,6 +349,13 @@ class Logical_Chaos
 		else
 			qpm.brute_user
 		end
+	end
+	
+	def pwreset_ff
+		puts "\n\nEnumerating users with ForeFront password reset. This might take a while please be patient ..."
+		pw_ff = PWRESET_FF.new(@host,@path,@file_usrs,@file_results,@proxy,@http_proxy)
+		pw_ff.brute_user
+		
 	end
 	
 	def websphere
@@ -392,6 +401,8 @@ if lc.check_params(ARGV)
 			case ARGV[1]			
 			when "qpm"
 				lc.qpm
+			when "pwreset_ff"
+				lc.pwreset_ff
 			when "peoplesoft"
 				lc.peoplesoft
 			when "websphere"
