@@ -120,11 +120,12 @@ class Webvpn
 	end
 	
 	def element_present?(how, what)
-		@driver.find_element(how, what)
-		true
-	rescue Selenium::WebDriver::Error::NoSuchElementError
-		false
-	end
+	    @driver.find_element(how, what)
+	    return true
+	rescue Exception => e 
+		puts e.message + "==> brute_user module webvpn"
+		return false
+	 end
   
 	def verify(&blk)
 		yield

@@ -165,7 +165,7 @@ class PWRESET_FF
 	    @driver.find_element(how, what)
 	    return true
 	rescue Exception => e 
-		puts e.message + "==> brute_user module pwreset forefront"
+		puts e.message + "==> enum_user module pwreset forefront"
 		return false
 	 end
   

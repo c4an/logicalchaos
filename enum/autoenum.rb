@@ -167,10 +167,11 @@ class Autoenum
 	end
 	
 	def element_present?(how, what)
-		@driver.find_element(how, what)
-		true
-	rescue Selenium::WebDriver::Error::NoSuchElementError
-		false
+	    @driver.find_element(how, what)
+	    return true
+	rescue Exception => e 
+		puts e.message + "==> enum_user module autoenum"
+		return false
 	end
   
 	def verify(&blk)
