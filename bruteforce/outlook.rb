@@ -73,12 +73,11 @@ class Outlook
 		    p.each do |passwd|
     	  f = File.new(@file,'r+')
     		f.each do |user|
-
     				result = File.new(@result_file,'a+')
 						user = user.to_s.strip
   					passwd = passwd.to_s.strip
     				#user = "domain" + "\\" + user.to_s
-				user = user.to_s
+				    user = user.to_s
     				puts "Testing User:#{user} Password:#{passwd}"
 				
     				@driver.find_element(:id, "username").clear
@@ -86,7 +85,7 @@ class Outlook
     				@driver.find_element(:id, "password").clear
     				@driver.find_element(:id, "password").send_keys passwd.to_s
     				@driver.find_element(:css, "input.btn").click
-    				@driver.find_element(:css, "span.signinTxt").click
+    				#@driver.find_element(:css, "span.signinTxt").click
     				if element_present?(:id, "password")
     					#Wrong password
     					@driver.manage.delete_all_cookies
@@ -103,10 +102,7 @@ class Outlook
     	end
 		p.close
 		rescue Exception => e  
-			result.puts "Exception with User:#{user} Password:#{passwd}"	
-			result.puts e.message  							
-			puts e.message  							
-			#@driver.find_element(:name, "pthdr2logout").click
+			puts e.message
 		end
 		
 		@driver.quit
@@ -129,8 +125,9 @@ class Outlook
 	def element_present?(how, what)
 		@driver.find_element(how, what)
 		true
-	rescue Selenium::WebDriver::Error::NoSuchElementError
-		false
+	rescue Exception => e 
+		puts e.message 
+		return false
 	end
   
 	def verify(&blk)
