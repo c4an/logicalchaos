@@ -105,7 +105,7 @@ class Rsa
 					@driver.find_element(:name, "password").clear
 					@driver.find_element(:name, "password").send_keys passwd.to_s
 					
-					#@driver.find_element(:name, "loginWithMethod").click					
+					@driver.find_element(:name, "loginWithMethod").click					
 					
 					
 					if element_present?(:name, "nextUserID")
@@ -136,7 +136,7 @@ class Rsa
 		
 	end
 	
-	ddef element_present?(how, what)
+	def element_present?(how, what)
 	    @driver.find_element(how, what)
 	    return true
 	rescue Exception => e 
